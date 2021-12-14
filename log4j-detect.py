@@ -7,6 +7,8 @@ disable_warnings()
 
 proxies = {}
 # proxies = {"http": "http://127.0.0.1:8080", "https": "http://127.0.0.1:8080"}
+thread_count = 64
+
 
 def sendDetectionRequest(url, urlId):
     try:
@@ -44,7 +46,7 @@ urlId = 0
 if len(argv) > 1:
     urlFile = open(argv[1], 'r')
     urlList = urlFile.readlines()
-    with ThreadPoolExecutor(max_workers=15) as executor:
+    with ThreadPoolExecutor(max_workers=thread_count) as executor:
         for url in urlList:
             urlId += 1
             threads.append(executor.submit(sendDetectionRequest, url, urlId))

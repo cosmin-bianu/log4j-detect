@@ -35,6 +35,8 @@ def sendDetectionRequest(url, urlId):
     except Exception as e:
         print('Exception on urlId={}, url={}:'.format(urlId, url))
         print(e)
+        print(e.__cause__)
+        print(e.__traceback__)
         pass
 
 threads = []
@@ -46,5 +48,6 @@ if len(argv) > 1:
         for url in urlList:
             urlId += 1
             threads.append(executor.submit(sendDetectionRequest, url, urlId))
+
 else:
     print('[!] Syntax: python3 {} <urlFile> <collaboratorPayload>'.format(argv[0]))
